@@ -7,8 +7,8 @@ This is a WIP project whose main purpose is to represent AWS infrastructure cost
 play around with the configuration. Such as asking the question if you put this resource on reserved instances 
 for a year, is it much more different over the three year one?
 
-You might be constrained on how much you can upfront, but hopefully this tool will help you get the most out of your
-resources in AWS.
+You might be constrained on how much you can upfront, but hopefully this tool will help you get answer how to get the 
+most out of your money for resources in AWS.
 
 ## Outstanding Items
 
