@@ -1,0 +1,15 @@
+---
+aws:
+  # No effect yet
+  default-region: eu-west-1
+
+  # Services to download when building the cache
+  services:
+    - AmazonEC2
+    - AmazonRDS
+    - AmazonES
+    - AmazonElastiCache
+    - AmazonGlacier
+    - AmazonS3
+    - AWSQueueService
+    - AmazonCloudFront
