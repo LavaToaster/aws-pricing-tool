@@ -5,6 +5,7 @@ namespace Lavoaster\AWSClientPricing\Commands;
 use Lavoaster\AWSClientPricing\AWS\Calculator;
 use Lavoaster\AWSClientPricing\AWS\Factories\PriceFactory;
 use Lavoaster\AWSClientPricing\Definition\AllOnDemand;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableSeparator;
 
 class CalculateCommand extends BaseCommand
@@ -18,13 +19,21 @@ class CalculateCommand extends BaseCommand
     {
         $this->output->title('Calculator');
 
-        $definitions = [
-            'OD' => AllOnDemand::definition(),
-        ];
+        $definitions = AllOnDemand::getAll();
 
         $this->output->section('Loading Data into Memory');
 
-        foreach ($definitions['OD']['items'] as $service => $resources) {
+        $services = [];
+
+        foreach ($definitions as $key => $definition) {
+            foreach ($definition['items'] as $service => $resources) {
+                $services[] = $service;
+            }
+        }
+
+        $services = array_unique($services);
+
+        foreach ($services as $service) {
             $this->output->write(' Loading ' . $service . '...');
 
             $priceFactory->loadOffering($service);
@@ -38,7 +47,20 @@ class CalculateCommand extends BaseCommand
 
         $calculator = new Calculator($priceFactory);
 
+        $this->output->note([
+            'Calculation Methodology:',
+            'Hourly - Raw price',
+            'Daily - Hourly * 24',
+            'Monthly - Hourly * 730',
+            'Yearly - (Hourly * 24 * 365) + One-Time 1yr',
+            'Year One - Yearly + One-Time 3yr',
+            'Year Three - (Yearly * 3) + One-Time 3yr',
+        ]);
+        $this->output->note('One Time fees are not spread out into hourly, daily, or monthly costs');
+
         foreach ($definitions as $key => $definition) {
+            $this->output->section($key);
+
             $this->calculateDefinition($calculator, $definition);
         }
     }
@@ -80,22 +102,17 @@ class CalculateCommand extends BaseCommand
             'Year Three',
         ];
 
+        $table = new Table($this->output);
 
-        $this->output->note([
-            'Calculation Methodology:',
-            'Hourly - Raw price',
-            'Daily - Hourly * 24',
-            'Monthly - Hourly * 730',
-            'Yearly - (Hourly * 24 * 365) + One-Time 1yr',
-            'Year One - Yearly + One-Time 3yr',
-            'Year Three - (Yearly * 3) + One-Time 3yr',
-        ]);
-        $this->output->note('One Time fees are not spread out into hourly, daily, or monthly costs');
+        $table->setHeaders($headers);
+        $table->setRows($tableData);
 
-        $this->output->table(
-            $headers,
-            $tableData
-        );
+        $table->render();
+
+//        $this->output->table(
+//            $headers,
+//            $tableData
+//        );
     }
 
     private function calculateSupport(array $pricing): array
@@ -165,7 +182,7 @@ class CalculateCommand extends BaseCommand
 
         if ($formatNumber) {
             $moneyValues = array_map(function ($value) {
-                return '$ ' . number_format($value, 2);
+                return number_format($value, 2);
             }, $moneyValues);
         }
 
