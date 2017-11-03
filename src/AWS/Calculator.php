@@ -103,12 +103,13 @@ class Calculator
             $pricing['monthly'] = bcmul($pricing['hourly'], $averageHoursInAMonth);
             $pricing['yearly'] = bcmul($pricing['hourly'], $hoursInAYear);
             $pricing['yearOne'] = $pricing['yearly'];
-            $pricing['yearThree'] = bcmul($pricing['yearOne'], 3);
 
             if (isset($pricing['oneTime1yr'])) {
                 $pricing['yearly'] = bcadd($pricing['yearly'], $pricing['oneTime1yr']);
                 $pricing['yearOne'] = bcadd($pricing['yearOne'], $pricing['oneTime1yr']);
             }
+
+            $pricing['yearThree'] = bcmul($pricing['yearly'], 3);
 
             if (isset($pricing['oneTime3yr'])) {
                 $pricing['yearOne'] = bcadd($pricing['yearOne'], $pricing['oneTime3yr']);
