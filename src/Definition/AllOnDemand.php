@@ -11,8 +11,13 @@ class AllOnDemand
     public static function getAll()
     {
         return [
-            'OD' => self::od(),
-            'RS1' => self::rs1(),
+            'On Demand' => self::od(),
+            '1 Year (No Upfront)'       => self::rs1No(),
+            '1 Year (Partial Upfront)'  => self::rs1Partial(),
+            '1 Year (All Upfront)'      => self::rs1(),
+            '3 Year (No Upfront)'       => self::rs3No(),
+            '3 Year (Partial Upfront)'  => self::rs3Partial(),
+            '3 Year (All Upfront)'      => self::rs3(),
         ];
     }
 
@@ -32,17 +37,7 @@ class AllOnDemand
                                 'tenancy' => 'Shared',
                             ],
                             'term' => Terms::ON_DEMAND,
-                            'units' => 2,
-                        ],
-                        [
-                            'criteria' => [
-                                'location' => $locationMap[Regions::EU_WEST_1],
-                                'instanceType' => 't2.small',
-                                'operatingSystem' => 'Linux',
-                                'tenancy' => 'Shared',
-                            ],
-                            'term' => Terms::ON_DEMAND,
-                            'units' => 1,
+                            'units' => 4,
                         ],
                         [
                             'criteria' => [
@@ -52,7 +47,7 @@ class AllOnDemand
                                 'tenancy' => 'Shared',
                             ],
                             'term' => Terms::ON_DEMAND,
-                            'units' => 10,
+                            'units' => 15,
                         ],
                         [
                             'criteria' => [
@@ -96,7 +91,27 @@ class AllOnDemand
                                 'deploymentOption' => 'Single-AZ',
                             ],
                             'term' => Terms::ON_DEMAND,
-                            'units' => 7,
+                            'units' => 8,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.small',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::ON_DEMAND,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::ON_DEMAND,
+                            'units' => 1,
                         ],
                         [
                             'criteria' => [
@@ -129,7 +144,7 @@ class AllOnDemand
                                 'cacheEngine' => 'Redis',
                             ],
                             'term' => Terms::ON_DEMAND,
-                            'units' => 6,
+                            'units' => 9,
                         ],
                         [
                             'criteria' => [
@@ -147,7 +162,7 @@ class AllOnDemand
                                 'cacheEngine' => 'Redis',
                             ],
                             'term' => Terms::ON_DEMAND,
-                            'units' => 1,
+                            'units' => 2,
                         ],
                     ],
                 ],
@@ -170,18 +185,306 @@ class AllOnDemand
                                 'operatingSystem' => 'Linux',
                                 'tenancy' => 'Shared',
                             ],
-                            'term' => Terms::STANDARD_1_YEAR_PARTIAL_UPFRONT,
+                            'term' => Terms::STANDARD_1_YEAR_ALL_UPFRONT,
+                            'units' => 4,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 't2.medium',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_ALL_UPFRONT,
+                            'units' => 15,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'm3.medium',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_ALL_UPFRONT,
+                            'units' => 6,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'c4.large',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_ALL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'c4.xlarge',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_ALL_UPFRONT,
+                            'units' => 1,
+                        ],
+                    ],
+                ],
+                Offers::AmazonRDS => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.micro',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_ALL_UPFRONT,
+                            'units' => 8,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.small',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_ALL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_ALL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.micro',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Multi-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_ALL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Multi-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_ALL_UPFRONT,
+                            'units' => 3,
+                        ],
+                    ],
+                ],
+                Offers::AmazonElastiCache => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.micro',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_HEAVY_UTIL,
+                            'units' => 9,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.small',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_HEAVY_UTIL,
                             'units' => 2,
                         ],
                         [
                             'criteria' => [
                                 'location' => $locationMap[Regions::EU_WEST_1],
-                                'instanceType' => 't2.small',
+                                'instanceType' => 'cache.t2.medium',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_HEAVY_UTIL,
+                            'units' => 2,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public static function rs3(): array
+    {
+        $locationMap = array_flip(Regions::LOCATION_NAME_TO_REGION_CODE);
+
+        return [
+            'items' => [
+                Offers::AmazonEC2 => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 't2.micro',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_ALL_UPFRONT,
+                            'units' => 4,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 't2.medium',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_ALL_UPFRONT,
+                            'units' => 15,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'm3.medium',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_ALL_UPFRONT,
+                            'units' => 6,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'c4.large',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_ALL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'c4.xlarge',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_ALL_UPFRONT,
+                            'units' => 1,
+                        ],
+                    ],
+                ],
+                Offers::AmazonRDS => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.micro',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_ALL_UPFRONT,
+                            'units' => 8,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.small',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_ALL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_ALL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.micro',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Multi-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_ALL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Multi-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_ALL_UPFRONT,
+                            'units' => 3,
+                        ],
+                    ],
+                ],
+                Offers::AmazonElastiCache => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.micro',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_HEAVY_UTIL,
+                            'units' => 9,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.small',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_HEAVY_UTIL,
+                            'units' => 2,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.medium',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_HEAVY_UTIL,
+                            'units' => 2,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public static function rs1Partial(): array
+    {
+        $locationMap = array_flip(Regions::LOCATION_NAME_TO_REGION_CODE);
+
+        return [
+            'items' => [
+                Offers::AmazonEC2 => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 't2.micro',
                                 'operatingSystem' => 'Linux',
                                 'tenancy' => 'Shared',
                             ],
                             'term' => Terms::STANDARD_1_YEAR_PARTIAL_UPFRONT,
-                            'units' => 1,
+                            'units' => 4,
                         ],
                         [
                             'criteria' => [
@@ -191,7 +494,7 @@ class AllOnDemand
                                 'tenancy' => 'Shared',
                             ],
                             'term' => Terms::STANDARD_1_YEAR_PARTIAL_UPFRONT,
-                            'units' => 10,
+                            'units' => 15,
                         ],
                         [
                             'criteria' => [
@@ -235,7 +538,27 @@ class AllOnDemand
                                 'deploymentOption' => 'Single-AZ',
                             ],
                             'term' => Terms::STANDARD_1_YEAR_PARTIAL_UPFRONT,
-                            'units' => 7,
+                            'units' => 8,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.small',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_PARTIAL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_PARTIAL_UPFRONT,
+                            'units' => 1,
                         ],
                         [
                             'criteria' => [
@@ -267,8 +590,8 @@ class AllOnDemand
                                 'instanceType' => 'cache.t2.micro',
                                 'cacheEngine' => 'Redis',
                             ],
-                            'term' => Terms::ON_DEMAND,
-                            'units' => 6,
+                            'term' => Terms::STANDARD_1_YEAR_HEAVY_UTIL,
+                            'units' => 9,
                         ],
                         [
                             'criteria' => [
@@ -276,7 +599,7 @@ class AllOnDemand
                                 'instanceType' => 'cache.t2.small',
                                 'cacheEngine' => 'Redis',
                             ],
-                            'term' => Terms::ON_DEMAND,
+                            'term' => Terms::STANDARD_1_YEAR_HEAVY_UTIL,
                             'units' => 2,
                         ],
                         [
@@ -285,8 +608,455 @@ class AllOnDemand
                                 'instanceType' => 'cache.t2.medium',
                                 'cacheEngine' => 'Redis',
                             ],
-                            'term' => Terms::ON_DEMAND,
+                            'term' => Terms::STANDARD_1_YEAR_HEAVY_UTIL,
+                            'units' => 2,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public static function rs3Partial(): array
+    {
+        $locationMap = array_flip(Regions::LOCATION_NAME_TO_REGION_CODE);
+
+        return [
+            'items' => [
+                Offers::AmazonEC2 => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 't2.micro',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 4,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 't2.medium',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 15,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'm3.medium',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 6,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'c4.large',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
                             'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'c4.xlarge',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 1,
+                        ],
+                    ],
+                ],
+                Offers::AmazonRDS => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.micro',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 8,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.small',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.micro',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Multi-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Multi-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 3,
+                        ],
+                    ],
+                ],
+                Offers::AmazonElastiCache => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.micro',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_HEAVY_UTIL,
+                            'units' => 9,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.small',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_HEAVY_UTIL,
+                            'units' => 2,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.medium',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_HEAVY_UTIL,
+                            'units' => 2,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public static function rs1No(): array
+    {
+        $locationMap = array_flip(Regions::LOCATION_NAME_TO_REGION_CODE);
+
+        return [
+            'items' => [
+                Offers::AmazonEC2 => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 't2.micro',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_NO_UPFRONT,
+                            'units' => 4,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 't2.medium',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_NO_UPFRONT,
+                            'units' => 15,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'm3.medium',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_NO_UPFRONT,
+                            'units' => 6,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'c4.large',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_NO_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'c4.xlarge',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_NO_UPFRONT,
+                            'units' => 1,
+                        ],
+                    ],
+                ],
+                Offers::AmazonRDS => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.micro',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_NO_UPFRONT,
+                            'units' => 8,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.small',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_NO_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_NO_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.micro',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Multi-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_NO_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Multi-AZ',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_NO_UPFRONT,
+                            'units' => 3,
+                        ],
+                    ],
+                ],
+                Offers::AmazonElastiCache => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.micro',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_HEAVY_UTIL,
+                            'units' => 9,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.small',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_HEAVY_UTIL,
+                            'units' => 2,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.medium',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_1_YEAR_HEAVY_UTIL,
+                            'units' => 2,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public static function rs3No(): array
+    {
+        $locationMap = array_flip(Regions::LOCATION_NAME_TO_REGION_CODE);
+
+        return [
+            'items' => [
+                Offers::AmazonEC2 => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 't2.micro',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::CONVERTIBLE_3_YEAR_NO_UPFRONT,
+                            'units' => 4,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 't2.medium',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::CONVERTIBLE_3_YEAR_NO_UPFRONT,
+                            'units' => 15,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'm3.medium',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::CONVERTIBLE_3_YEAR_NO_UPFRONT,
+                            'units' => 6,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'c4.large',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::CONVERTIBLE_3_YEAR_NO_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'c4.xlarge',
+                                'operatingSystem' => 'Linux',
+                                'tenancy' => 'Shared',
+                            ],
+                            'term' => Terms::CONVERTIBLE_3_YEAR_NO_UPFRONT,
+                            'units' => 1,
+                        ],
+                    ],
+                ],
+                Offers::AmazonRDS => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.micro',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 8,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.small',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Single-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.micro',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Multi-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 1,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'db.t2.large',
+                                'databaseEngine' => 'PostgreSQL',
+                                'deploymentOption' => 'Multi-AZ',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_PARTIAL_UPFRONT,
+                            'units' => 3,
+                        ],
+                    ],
+                ],
+                Offers::AmazonElastiCache => [
+                    'items' => [
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.micro',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_HEAVY_UTIL,
+                            'units' => 9,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.small',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_HEAVY_UTIL,
+                            'units' => 2,
+                        ],
+                        [
+                            'criteria' => [
+                                'location' => $locationMap[Regions::EU_WEST_1],
+                                'instanceType' => 'cache.t2.medium',
+                                'cacheEngine' => 'Redis',
+                            ],
+                            'term' => Terms::STANDARD_3_YEAR_HEAVY_UTIL,
+                            'units' => 2,
                         ],
                     ],
                 ],
