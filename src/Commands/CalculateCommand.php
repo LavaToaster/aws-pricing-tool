@@ -137,7 +137,7 @@ class CalculateCommand extends BaseCommand
     private function calculateSupportCost($runningValue): string
     {
         // Note because I'll forget this otherwise:
-        //  If support it enabled at a later date, all one-time fees are prorated into the costs.
+        //  If support is enabled at a later date, all one-time fees are prorated into the costs.
 
         $thresholds = [
             '0.10' => ['0', '10000'],
