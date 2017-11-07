@@ -15,6 +15,10 @@ class CalculateCommand extends BaseCommand
         $this->setName('calculate');
     }
 
+    /**
+     * @param PriceFactory $priceFactory
+     * @throws \Exception
+     */
     public function handle(PriceFactory $priceFactory)
     {
         $this->output->title('Calculator');
@@ -68,6 +72,7 @@ class CalculateCommand extends BaseCommand
     /**
      * @param $calculator
      * @param $definition
+     * @throws \Exception
      */
     private function calculateDefinition(Calculator $calculator, $definition)
     {
@@ -108,11 +113,6 @@ class CalculateCommand extends BaseCommand
         $table->setRows($tableData);
 
         $table->render();
-
-//        $this->output->table(
-//            $headers,
-//            $tableData
-//        );
     }
 
     private function calculateSupport(array $pricing): array
@@ -134,34 +134,30 @@ class CalculateCommand extends BaseCommand
         return $pricing;
     }
 
-    private function calculateSupportCost($runningValue): string
+    private function calculateSupportCost(string $total): string
     {
         // Note because I'll forget this otherwise:
         //  If support is enabled at a later date, all one-time fees are prorated into the costs.
 
-        $thresholds = [
-            '0.10' => ['0', '10000'],
-            '0.07' => ['10001', '80000'],
-            '0.05' => ['80001', '250000'],
-            '0.03' => ['250001', INF],
-        ];
-
+        $runningValue = $total;
         $supportCost = '0.00';
 
-        foreach ($thresholds as $percentage => list($min, $max)) {
-            if (bccomp($runningValue, $max) === 1) {
-                $supportCost = bcadd($supportCost, bcmul($runningValue, $percentage));
-                $runningValue = bcsub($runningValue, $max);
+        $thresholds = [
+            '250000' => '0.03',
+            '80000' => '0.05',
+            '10000' => '0.07',
+            '0' => '0.10',
+        ];
 
+        foreach ($thresholds as $threshold => $percentage) {
+            if ($threshold > $runningValue) {
                 continue;
             }
 
-            $supportCost = bcmul($runningValue, $percentage);
-
-            // No need to run through any more
-            if ($runningValue < $max) {
-                break;
-            }
+            $valueToCalculateAgainst = bcsub($runningValue, $threshold);
+            $costAtThreshold = bcmul($valueToCalculateAgainst, $percentage);
+            $supportCost = bcadd($supportCost, $costAtThreshold);
+            $runningValue = bcsub($runningValue, $valueToCalculateAgainst);
         }
 
         return $supportCost;
